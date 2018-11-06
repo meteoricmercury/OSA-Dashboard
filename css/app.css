@@ -1,0 +1,23 @@
+body {
+    font-family: 'Roboto';font-size: 22px;
+	background-color:#eee;
+}
+.content-bg{
+	background-color:#eee;
+}
+.bg-white{
+	background-color:#fff;
+}
+.zc-ref{
+	visibility:hidden!important;
+}
+.nav-link i {
+    padding-right: 13px;
+}
+.bold{
+	font-weight:bold;
+	color:#333;
+}
+.shadowc{
+	    box-shadow: 0px 0px 10px;
+}
