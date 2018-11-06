@@ -124,9 +124,10 @@ $(document).ready(function() {
             url: produrl,
             dataType: "json",
             success: function(result) {
-                console.log("response" + result);
-                responseObj = JSON.parse(JSON.stringify(result));
-                renderZing(responseObj);
+                if(result){
+					responseObj = JSON.parse(JSON.stringify(result));
+					renderZing(responseObj);
+				}
             }
         });
     }
@@ -134,24 +135,28 @@ $(document).ready(function() {
 	/*Function to render the chart using response from API*/
     function renderZing(resp) {
 
-        var seriesArr = [];
+        var seriesArr = [];		
         var brands = Object.keys(resp["result"]["overall"]["merchants"]);
-        var brandFirst = brands[0];
-        var dates = Object.keys(resp["result"]["overall"]["merchants"][brandFirst]);
-        for (var i in brands) {
-            var brand = brands[i];
-            var brandObj = resp["result"]["overall"]["merchants"][brand];
-            seriesArr[i] = {};
-            seriesArr[i]["values"] = Object.values(brandObj).map(Number);
-            seriesArr[i]["text"] = brand;
-        }
-        myConfig["graphset"][0]["scaleX"]["values"] = dates;
-        myConfig["graphset"][0]["series"] = seriesArr;
-        zingchart.render({
-            id: 'myChart',
-            height: 600,
-            data: myConfig
-        });
+		if(brands){
+			var brandFirst = brands[0];
+			var dates = Object.keys(resp["result"]["overall"]["merchants"][brandFirst]);
+			var brand = null;
+			var brandObj = null;
+			for (var i in brands) {
+				brand = brands[i];
+				brandObj = resp["result"]["overall"]["merchants"][brand];
+				seriesArr[i] = {};
+				seriesArr[i]["values"] = Object.values(brandObj).map(Number);
+				seriesArr[i]["text"] = brand;
+			}
+			myConfig["graphset"][0]["scaleX"]["values"] = dates;
+			myConfig["graphset"][0]["series"] = seriesArr;
+			zingchart.render({
+				id: 'myChart',
+				height: 600,
+				data: myConfig
+			});
+		}
     }
 
 
